@@ -4,7 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["kananev <russrage@gmail.com>"]
 packages = [
-    { include = "diff_calc"}
+    { include = "gendiff"}
 ]
 
 [tool.poetry.dependencies]
@@ -16,7 +16,7 @@ coverage = "^5.5"
 pytest = "^6.2.4"
 
 [tool.poetry.scripts]
-gendiff = "diff_calc.scripts.gendiff:main"
+gendiff = "gendiff.scripts.gendiff:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
