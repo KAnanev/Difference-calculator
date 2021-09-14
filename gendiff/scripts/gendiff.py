@@ -10,7 +10,7 @@ def open_file(path):
 
 def generate_diff(file_path1, file_path2):
     """ Получает путь к двум файлам,
-    сравнивает их и возвращает строку разности"""
+    сравнивает их и возвращает строку разности файлов"""
 
     result = []
     dict1 = open_file(file_path1)
