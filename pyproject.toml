@@ -9,6 +9,8 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.9"
+flake8-codeclimate = "^0.3.0"
+PyYAML = "^5.4.1"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.9.2"

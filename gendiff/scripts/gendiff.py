@@ -1,11 +1,17 @@
 import json
+import os
+import yaml
 import argparse
 
 
-def open_file(path):
-    """ Открывает файл десериализует JSON"""
+def open_file(path: str):
+    """ Открывает файл и десериализует его"""
+    _, file_extension = os.path.splitext(path)
     with open(path) as file:
-        return json.load(file)
+        if file_extension == '.json':
+            return json.load(file)
+        elif file_extension in ('.yaml', 'yml'):
+            return yaml.load(file, yaml.SafeLoader)
 
 
 def generate_diff(file_path1, file_path2):
