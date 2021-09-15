@@ -54,4 +54,4 @@ jobs:
         env:
          CC_TEST_REPORTER_ID: 6188d2b62075945d6905d35f056d57cd5564eb902450046960668f99f253bed7
         with:
-          coverageCommand: poetry run coverage run -m pytest
+          coverageCommand: poetry run coverage xml
