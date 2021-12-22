@@ -1,25 +1,13 @@
-from unittest import TestCase
-from gendiff.scripts.gendiff import generate_diff
+from gendiff.scripts.gendiff import diff_dict, get_data, generate_diff
 
 
-class Test(TestCase):
-    def setUp(self) -> None:
-        self.open_file = open('tests/fixtures/answer.txt')
-        self.data = self.open_file.read()
-        self.exp_json = generate_diff(
-            'tests/fixtures/file1.json',
-            'tests/fixtures/file2.json'
-        )
-        self.exp_yaml = generate_diff(
-            'tests/fixtures/file1.yaml',
-            'tests/fixtures/file2.yaml'
-        )
+def test_get_data():
+    assert isinstance(get_data('tests/fixtures/before_plain.json'), dict)
 
-    def tearDown(self) -> None:
-        self.open_file.close()
 
-    def test_generate_diff(self):
-        self.assertIsInstance(self.exp_json, str)
-        self.assertEqual(self.exp_json, self.data)
-        self.assertIsInstance(self.exp_yaml, str)
-        self.assertEqual(self.exp_yaml, self.data)
+def test_diff_dict(answer_data, json_before_dict, json_after_dict):
+    assert diff_dict(json_before_dict, json_after_dict) == answer_data
+
+
+def test_generate_diff(answer_data, path_before_file, path_after_file):
+    assert generate_diff(path_before_file, path_after_file) == answer_data

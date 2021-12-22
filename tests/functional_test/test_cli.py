@@ -27,9 +27,9 @@ def test_cli_help(cli_data):
     assert err == b''
 
 
-def test_cli_diff_plain(answer_data):
+def test_cli_diff_plain(cli_answer_data):
     command = ['poetry', 'run', 'gendiff', 'tests/fixtures/before_plain.json', 'tests/fixtures/after_plain.json']
     out, err, exitcode = capture(command)
     assert exitcode == 0
-    assert out == answer_data
+    assert out == cli_answer_data + b'\r\n'
     assert err == b''
