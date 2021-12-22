@@ -11,25 +11,25 @@ def capture(command):
     return out, err, proc.returncode
 
 
-def test_cli():
+def test_cli(error_cli_data):
     command = ['poetry', 'run', 'gendiff']
     out, err, exitcode = capture(command)
     assert exitcode == 2
     assert out == b''
-    assert err == b'usage: gendiff [-h] [-f FORMAT] first_file second_file\r\ngendiff: ' \
-                  b'error: the following arguments are required: first_file, second_file\r\n'
+    assert err == error_cli_data
 
 
-def test_cli_help():
+def test_cli_help(cli_data):
     command = ['poetry', 'run', 'gendiff', '-h']
     out, err, exitcode = capture(command)
     assert exitcode == 0
-    assert out == b'usage: gendiff [-h] [-f FORMAT]' \
-                  b' first_file second_file\r\n\r\n' \
-                  b'Generate diff\r\n\r\npositional' \
-                  b' arguments:\r\n  first_file            ' \
-                  b'First argument\r\n  second_file           ' \
-                  b'Second argument\r\n\r\noptional arguments:\r\n  -h, --help            ' \
-                  b'show this help message and exit\r\n  -f FORMAT, --format FORMAT\r\n                        ' \
-                  b'set format of output.\r\n'
+    assert out == cli_data
+    assert err == b''
+
+
+def test_cli_diff_plain(answer_data):
+    command = ['poetry', 'run', 'gendiff', 'tests/fixtures/file1.json', 'tests/fixtures/file2.json']
+    out, err, exitcode = capture(command)
+    assert exitcode == 0
+    assert out == answer_data
     assert err == b''
