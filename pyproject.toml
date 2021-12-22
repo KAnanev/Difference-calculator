@@ -4,7 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["kananev <russrage@gmail.com>"]
 packages = [
-    { include = "gendiff"}
+    { include = "gendiff" }
 ]
 
 [tool.poetry.dependencies]
