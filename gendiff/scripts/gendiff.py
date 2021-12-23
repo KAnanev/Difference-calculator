@@ -1,5 +1,7 @@
 import json
 import os
+import sys
+
 import yaml
 import argparse
 
@@ -30,7 +32,6 @@ def diff_dict(before_dict: dict, after_dict: dict) -> str:
 
 
 def get_data(file_path: str):
-
     _, file_extension = os.path.splitext(file_path)
 
     with open(file_path) as file:
@@ -47,22 +48,27 @@ def generate_diff(before_file, after_file):
     return diff_dict(before_dict, after_dict)
 
 
-def main():
+def parse_args(args):
     parser = argparse.ArgumentParser(
         description='Generate diff'
     )
-    parser.add_argument('first_file', type=str,)
-    parser.add_argument('second_file', type=str,)
+    parser.add_argument('first_file', type=str, )
+    parser.add_argument('second_file', type=str, )
     parser.add_argument(
         '-f', '--format',
         type=str, default='FORMAT',
         help='set format of output',
     )
 
-    args = parser.parse_args()
-    if args.first_file and args.second_file:
-        print(generate_diff(args.first_file, args.second_file))
+    return parser.parse_args(args)
 
 
-if __name__ == '__main__':
+def main():  # pragma: no cover
+    parser = parse_args(sys.argv[1:])
+
+    if parser.first_file and parser.second_file:
+        print(generate_diff(parser.first_file, parser.second_file))
+
+
+if __name__ == '__main__':  # pragma: no cover
     main()
