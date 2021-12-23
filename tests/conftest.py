@@ -37,6 +37,16 @@ def path_after_file():
 
 
 @pytest.fixture()
+def yaml_path_before_file():
+    return 'tests/fixtures/before_plain.yaml'
+
+
+@pytest.fixture()
+def yml_path_after_file():
+    return 'tests/fixtures/after_plain.yml'
+
+
+@pytest.fixture()
 def json_before_dict(path_before_file):
     with open(path_before_file) as file:
         return json.load(file)

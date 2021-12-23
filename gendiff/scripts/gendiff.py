@@ -1,9 +1,6 @@
-import json
-import os
 import sys
 
-import yaml
-import argparse
+from gendiff.parser import get_data, parse_args
 
 
 def differ(key, first_value, second_value):
@@ -31,36 +28,11 @@ def diff_dict(before_dict: dict, after_dict: dict) -> str:
     return result
 
 
-def get_data(file_path: str):
-    _, file_extension = os.path.splitext(file_path)
-
-    with open(file_path) as file:
-        if file_extension == '.json':
-            return json.load(file)
-        elif file_extension in ('.yaml', 'yml'):
-            return yaml.load(file, yaml.SafeLoader)
-
-
 def generate_diff(before_file, after_file):
     before_dict = get_data(before_file)
     after_dict = get_data(after_file)
 
     return diff_dict(before_dict, after_dict)
-
-
-def parse_args(args):
-    parser = argparse.ArgumentParser(
-        description='Generate diff'
-    )
-    parser.add_argument('first_file', type=str, )
-    parser.add_argument('second_file', type=str, )
-    parser.add_argument(
-        '-f', '--format',
-        type=str, default='FORMAT',
-        help='set format of output',
-    )
-
-    return parser.parse_args(args)
 
 
 def main():  # pragma: no cover
