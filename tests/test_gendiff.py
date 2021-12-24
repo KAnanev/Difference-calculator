@@ -1,4 +1,4 @@
-from gendiff.scripts.gendiff import diff_dict, generate_diff
+from gendiff.scripts.gendiff import diff_dict, generate_diff, collect_diff_dict
 from gendiff.parser import get_data, parse_args
 
 
@@ -21,3 +21,6 @@ def test_parser_args(path_before_file, path_after_file):
     assert parser.first_file
     assert parser.second_file
     assert parser.format
+
+def test_collect_diff_dict():
+    assert True

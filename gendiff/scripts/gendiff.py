@@ -2,6 +2,15 @@ import sys
 
 from gendiff.parser import get_data, parse_args
 
+ADDED = 'added'
+NESTED = 'nested'
+REMOVED = 'removed'
+UNCHANGED = 'unchanged'
+UPDATED = 'updated'
+
+def collect_diff_dict(key, old_value=None, new_value=None, status=UNCHANGED, parent=None):
+    pass
+
 
 def differ(key, first_value, second_value):
     if first_value and second_value:
