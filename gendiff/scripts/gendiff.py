@@ -1,6 +1,8 @@
 import sys
+from typing import Union
 
 from gendiff.parser import get_data, parse_args
+
 
 ADDED = 'added'
 REMOVED = 'removed'
@@ -8,42 +10,48 @@ UNCHANGED = 'unchanged'
 CHANGED = 'changed'
 
 
-def collect_diff_dict(key, old_value=None, new_value=None, status=UNCHANGED, parent=None):
-    collect_dict = {
-        key: {
-            old_value,
-            new_value,
-            status,
-            parent,
+def bool_to_string(value: bool) -> Union[str, bool]:
+    """Функция преобразования булева значения в строку"""
+    if isinstance(value, bool):
+        return str(value).lower()
+    return value
+
+
+def get_diff_value(old_value, new_value):
+    """Функция разности двух значений"""
+    if not old_value:
+        return {
+            'status': ADDED,
+            'value': new_value,
         }
+
+    elif not new_value:
+        return {
+            'status': REMOVED,
+            'value': old_value,
+        }
+
+    elif old_value == new_value:
+        return {
+            'status': UNCHANGED,
+            'value': old_value,
+        }
+
+    elif old_value != new_value:
+        return {
+            'status': CHANGED,
+            'value': (old_value, new_value)
+        }
+
+
+def collect_diff_dicts(old_dict: dict, new_dict: dict) -> dict:
+    """Функция разности двух словарей"""
+    keys = list(old_dict.keys() | new_dict.keys())
+    return {
+        key: get_diff_value(
+            bool_to_string(old_dict.get(key)), bool_to_string(new_dict.get(key))
+        ) for key in sorted(keys)
     }
-    return collect_dict
-
-
-def collect_dicts_on_dict(key, first_value=None, second_value=None):
-
-    if first_value and second_value:
-        if first_value == second_value:
-            return collect_diff_dict(key=key, old_value=first_value)
-        else:
-            return collect_diff_dict(key=key, old_value=first_value, new_value=second_value, status=CHANGED)
-    elif second_value:
-        return collect_diff_dict(key=key, new_value=second_value, status=ADDED)
-    else:
-        return collect_diff_dict(key=key, old_value=first_value, status=REMOVED)
-
-
-# def diff_dict(before_dict: dict, after_dict: dict) -> str:
-#     keys = sorted(list(before_dict.keys() | after_dict.keys()))
-#     result = '{\n'
-#
-#     for key in keys:
-#         first_value = str(before_dict.get(key, ''))
-#         second_value = str(after_dict.get(key, ''))
-#         result += f'{differ(key, first_value, second_value)}\n'
-#     result += '}'
-#
-#     return result
 
 
 def generate_diff(before_file, after_file):
