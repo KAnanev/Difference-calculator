@@ -1,19 +1,6 @@
-from gendiff.scripts.gendiff import generate_diff, bool_to_string, get_diff_value, collect_diff_dicts
-from gendiff.parser import get_data, parse_args
+from gendiff.scripts.gendiff import bool_to_string, get_diff_value, collect_diff_dicts, render, _string
+from gendiff.parser import parse_args
 
-
-# def test_get_data(path_before_file, yaml_path_before_file, yml_path_after_file):
-#     assert isinstance(get_data(path_before_file), dict)
-#     assert isinstance(get_data(yaml_path_before_file), dict)
-#     assert isinstance(get_data(yml_path_after_file), dict)
-#
-#
-# # def test_diff_dict(answer_data, json_before_dict, json_after_dict):
-# #     assert diff_dict(json_before_dict, json_after_dict) == answer_data
-#
-#
-# def test_generate_diff(answer_data, path_before_file, path_after_file):
-#     assert generate_diff(path_before_file, path_after_file) == answer_data
 
 def test_parser_args(path_before_file, path_after_file):
     parser = parse_args([path_before_file, path_after_file])
@@ -43,3 +30,13 @@ def test_collect_dicts_on_dict():
     assert get_diff_value('value', None) == {'status': 'removed', 'value': 'value'}
     assert get_diff_value('value', 'value') == {'status': 'unchanged', 'value': 'value'}
     assert get_diff_value('value', 'an_value') == {'status': 'changed', 'value': ('value', 'an_value')}
+
+
+def test__string():
+    assert _string('+', 'key', 'value') == ' + key: value'
+
+
+def test_render(diff_dict, answer_data):
+    result = render(diff_dict)
+    assert isinstance(result, str)
+    assert result == answer_data

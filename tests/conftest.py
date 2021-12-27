@@ -56,3 +56,14 @@ def json_before_dict(path_before_file):
 def json_after_dict(path_after_file):
     with open(path_after_file) as file:
         return json.load(file)
+
+
+@pytest.fixture()
+def diff_dict():
+    return {
+        'host': {'status': 'unchanged', 'value': 'hexlet.io'},
+        'proxy': {'status': 'removed', 'value': '123.234.53.22'},
+        'timeout': {'status': 'changed', 'value': (50, 20)},
+        'verbose': {'status': 'added', 'value': 'true'}
+    }
+
