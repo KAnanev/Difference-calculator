@@ -3,10 +3,10 @@ from typing import Union
 
 from gendiff.parser import get_data, parse_args
 
-ADDED = 'added'
-REMOVED = 'removed'
-UNCHANGED = 'unchanged'
-CHANGED = 'changed'
+ADDED = ('added', '+',)
+REMOVED = ('removed', '-',)
+UNCHANGED = ('unchanged', ' ',)
+CHANGED = ('changed', '-+',)
 
 
 def bool_to_string(value: bool) -> not bool:
@@ -53,25 +53,17 @@ def collect_diff_dicts(old_dict: dict, new_dict: dict) -> dict:
     }
 
 
-def _string(op, key, value):
-    return f' {op} {key}: {value}'
-
-
 def render_string(key, value) -> str:
-    status = key['status']
-    if status == ADDED:
-        return _string('+', key, value)
-    elif status == UNCHANGED:
-        return _string(' ', key, value)
-    elif status == REMOVED:
-        return _string('-', key, value)
-    elif status == CHANGED:
-        return f'{_string("-", key, value[0])}\n{_string("+", key, value[1])}'
+    operator = value['status'][1]
+    if value['status'] == CHANGED:
+        return f' {operator[0]} {key}: {value["value"][0]}\n {operator[1]} {key}: {value["value"][1]}'
+    else:
+        return f' {operator} {key}: {value["value"]}'
 
 
 def render(diff_dict: dict) -> str:
     """Функция форматирования словаря в строку"""
-    result = [render_string(key, value) for key, value in diff_dict]
+    result = [render_string(key, value) for key, value in diff_dict.items()]
     result = ['{'] + result + ['}']
     return '\n'.join(result)
 
@@ -79,8 +71,9 @@ def render(diff_dict: dict) -> str:
 def generate_diff(before_file, after_file):
     before_dict = get_data(before_file)
     after_dict = get_data(after_file)
+    diff_dict = collect_diff_dicts(before_dict, after_dict)
 
-    # return diff_dict(before_dict, after_dict)
+    return render(diff_dict)
 
 
 def main():  # pragma: no cover

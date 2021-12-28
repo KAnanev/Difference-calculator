@@ -59,11 +59,12 @@ def json_after_dict(path_after_file):
 
 
 @pytest.fixture()
-def diff_dict():
+def collect_diff_dict():
     return {
-        'host': {'status': 'unchanged', 'value': 'hexlet.io'},
-        'proxy': {'status': 'removed', 'value': '123.234.53.22'},
-        'timeout': {'status': 'changed', 'value': (50, 20)},
-        'verbose': {'status': 'added', 'value': 'true'}
+        'follow': {'status': ('removed', '-'), 'value': 'false'},
+        'host': {'status': ('unchanged', ' '), 'value': 'hexlet.io'},
+        'proxy': {'status': ('removed', '-'), 'value': '123.234.53.22'},
+        'timeout': {'status': ('changed', '-+'), 'value': (50, 20)},
+        'verbose': {'status': ('added', '+'), 'value': 'true'},
     }
 
