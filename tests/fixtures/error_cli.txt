@@ -1,2 +1,0 @@
-usage: gendiff [-h] [-f FORMAT] first_file second_file
-gendiff: error: the following arguments are required: first_file, second_file

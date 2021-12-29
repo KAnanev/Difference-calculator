@@ -1,5 +1,7 @@
 import subprocess
 
+from tests.fixtures.output import output_plain, output_cli_help, output_error_cli
+
 
 def capture(command):
     proc = subprocess.Popen(
@@ -11,25 +13,25 @@ def capture(command):
     return out, err, proc.returncode
 
 
-def test_cli(error_cli_data):
+def test_cli():
     command = ['poetry', 'run', 'gendiff']
     out, err, exitcode = capture(command)
     assert exitcode == 2
     assert out == b''
-    assert err == error_cli_data
+    assert err == output_error_cli.encode()
 
 
-def test_cli_help(cli_data):
+def test_cli_help():
     command = ['poetry', 'run', 'gendiff', '-h']
     out, err, exitcode = capture(command)
     assert exitcode == 0
-    assert out == cli_data
+    assert out.startswith(output_cli_help.encode())
     assert err == b''
 
 
-def test_cli_diff_plain(cli_answer_data):
-    command = ['poetry', 'run', 'gendiff', 'tests/fixtures/before_plain.json', 'tests/fixtures/after_plain.json']
+def test_cli_diff_plain():
+    command = ['poetry', 'run', 'gendiff', 'data/before_plain.json', 'data/after_plain.json']
     out, err, exitcode = capture(command)
     assert exitcode == 0
-    assert out.startswith(cli_answer_data)
+    assert out.startswith(output_plain.encode())
     assert err == b''

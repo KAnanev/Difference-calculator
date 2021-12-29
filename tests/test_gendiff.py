@@ -1,10 +1,17 @@
 from gendiff.scripts.gendiff import bool_to_string, get_diff_value, collect_diff_dicts, \
     ADDED, CHANGED, UNCHANGED, REMOVED, render_string, render, generate_diff
-from gendiff.parser import parse_args
+from gendiff.parser import parse_args, get_data
+from tests.fixtures.output import output_plain
 
 
-def test_parser_args(path_before_file, path_after_file):
-    parser = parse_args([path_before_file, path_after_file])
+def test_get_data():
+    assert isinstance(get_data('data/before_plain.json'), dict)
+    assert isinstance(get_data('data/before_plain.yaml'), dict)
+    assert isinstance(get_data('data/after_plain.yml'), dict)
+
+
+def test_parser_args():
+    parser = parse_args(['file.json', 'file.json'])
     assert parser.first_file
     assert parser.second_file
     assert parser.format
@@ -34,8 +41,9 @@ def test_render_string(collect_diff_dict):
     assert render_string('timeout', collect_diff_dict['timeout']) == ' - timeout: 50\n + timeout: 20'
 
 
-def test_render(collect_diff_dict, answer_data):
-    assert render(collect_diff_dict) == answer_data
+def test_render(collect_diff_dict):
+    assert render(collect_diff_dict) == output_plain
 
-def test_generate_diff(path_before_file, path_after_file, answer_data):
-    assert generate_diff(path_before_file, path_after_file) == answer_data
+
+def test_generate_diff(path_before_file, path_after_file):
+    assert generate_diff(path_before_file, path_after_file) == output_plain
