@@ -30,7 +30,21 @@ def test_get_diff_value():
 
     assert get_diff_value({'key': 'value'}, 'value') == {'status': CHANGED, 'value': ({'key': 'value'}, 'value')}
     assert get_diff_value('value', {'key': 'value'}) == {'status': CHANGED, 'value': ('value', {'key': 'value'})}
-    assert get_diff_value({'key': 'value'}, {'key': 'value'}) == {'status': UNCHANGED, 'value': ({'key': 'value'})}
+    assert get_diff_value({'key': 'value'}, {'key': 'value'}) == {
+        'status': 'nested', 'value': {
+            'key': {
+                'status': UNCHANGED, 'value': 'value'
+            }
+        }
+    }
+
+    assert get_diff_value({'key': 'value'}, {'key': 'an_value'}) == {
+        'status': 'nested', 'value': {
+            'key': {
+                'status': CHANGED, 'value': ('value', 'an_value')
+            }
+        }
+    }
 
 
 

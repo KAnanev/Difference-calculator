@@ -17,7 +17,7 @@ def bool_to_string(value: bool) -> not bool:
 
 
 def get_diff_value(old_value: Union[str, None, dict],
-                   new_value: Union[str, None, dict]) -> dict:
+                   new_value: Union[str, None, dict]):
     """Функция разности двух значений"""
     if not old_value:
         return {
@@ -29,6 +29,12 @@ def get_diff_value(old_value: Union[str, None, dict],
         return {
             'status': REMOVED,
             'value': old_value,
+        }
+
+    elif isinstance(old_value, dict) and isinstance(new_value, dict):
+        return {
+            'status': 'nested',
+            'value': collect_diff_dicts(old_value, new_value)
         }
 
     elif old_value == new_value:
