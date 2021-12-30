@@ -16,8 +16,8 @@ def bool_to_string(value: bool) -> not bool:
     return value
 
 
-def get_diff_value(old_value: Union[str, None],
-                   new_value: Union[str, None]) -> dict:
+def get_diff_value(old_value: Union[str, None, dict],
+                   new_value: Union[str, None, dict]) -> dict:
     """Функция разности двух значений"""
     if not old_value:
         return {

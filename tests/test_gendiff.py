@@ -28,6 +28,11 @@ def test_get_diff_value():
     assert get_diff_value('value', 'value') == {'status': UNCHANGED, 'value': 'value'}
     assert get_diff_value('value', 'an_value') == {'status': CHANGED, 'value': ('value', 'an_value')}
 
+    assert get_diff_value({'key': 'value'}, 'value') == {'status': CHANGED, 'value': ({'key': 'value'}, 'value')}
+    assert get_diff_value('value', {'key': 'value'}) == {'status': CHANGED, 'value': ('value', {'key': 'value'})}
+    assert get_diff_value({'key': 'value'}, {'key': 'value'}) == {'status': UNCHANGED, 'value': ({'key': 'value'})}
+
+
 
 def test_collect_diff_dicts(collect_diff_dict):
     assert collect_diff_dicts({'key': 'value'}, {'key': 'value'}) == {'key': {'status': UNCHANGED, 'value': 'value'}}

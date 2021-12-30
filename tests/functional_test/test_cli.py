@@ -1,6 +1,6 @@
 import subprocess
 
-from tests.fixtures.output import output_plain, output_cli_help, output_error_cli
+from tests.fixtures.output import output_plain, output_cli_help, output_error_cli, output_nested
 
 
 def capture(command):
@@ -34,4 +34,12 @@ def test_cli_diff_plain():
     out, err, exitcode = capture(command)
     assert exitcode == 0
     assert out.startswith(output_plain.encode())
+    assert err == b''
+
+
+def test_cli_diff_nested():
+    command = ['poetry', 'run', 'gendiff', 'data/before_nested.json', 'data/after_nested.json']
+    out, err, exitcode = capture(command)
+    assert exitcode == 0
+    assert out.startswith(output_nested.encode())
     assert err == b''
