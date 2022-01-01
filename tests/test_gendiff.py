@@ -47,7 +47,6 @@ def test_get_diff_value():
     }
 
 
-
 def test_collect_diff_dicts(collect_diff_dict):
     assert collect_diff_dicts({'key': 'value'}, {'key': 'value'}) == {'key': {'status': UNCHANGED, 'value': 'value'}}
     assert collect_diff_dicts({'follow': False, 'host': 'hexlet.io', 'timeout': 50, 'proxy': '123.234.53.22'},

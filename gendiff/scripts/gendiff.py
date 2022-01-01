@@ -1,5 +1,4 @@
 import sys
-from typing import Union
 
 from gendiff.parser import get_data, parse_args
 
@@ -9,6 +8,43 @@ UNCHANGED = ('unchanged', ' ',)
 CHANGED = ('changed', '-+',)
 
 
+def inv_dict(status, value):
+    return {
+        'status': status,
+        'value': value,
+    }
+
+
+def add_(*args):
+    return inv_dict(ADDED, args[1])
+
+
+def rm_(*args):
+    return inv_dict(REMOVED, args[0])
+
+
+def un_change_(*args):
+    return inv_dict(UNCHANGED, args[1])
+
+
+def change_(*args):
+    return inv_dict(CHANGED, args)
+
+
+def diff_dicts_(*args):
+    return inv_dict('nested', collect_diff_dicts(*args))
+
+
+ACTION_STATUS = {
+    (True, False): rm_,
+    (False, True): add_,
+    True: un_change_,
+    False: change_,
+    (True, True): diff_dicts_,
+
+}
+
+
 def bool_to_string(value: bool) -> not bool:
     """Функция преобразования булева значения в строку"""
     if isinstance(value, bool):
@@ -16,38 +52,18 @@ def bool_to_string(value: bool) -> not bool:
     return value
 
 
-def get_diff_value(old_value: Union[str, None, dict],   # noqa:C901
-                   new_value: Union[str, None, dict]):
+def get_diff_value(old_value, new_value):
     """Функция разности двух значений"""
-    if not old_value:
-        return {
-            'status': ADDED,
-            'value': new_value,
-        }
 
-    elif not new_value:
-        return {
-            'status': REMOVED,
-            'value': old_value,
-        }
+    if old_value and new_value:
+        if isinstance(old_value, dict) and isinstance(new_value, dict):
+            diff_values = ACTION_STATUS.get((bool(old_value), bool(new_value)))
+        else:
+            diff_values = ACTION_STATUS.get(old_value == new_value)
+    else:
+        diff_values = ACTION_STATUS.get((bool(old_value), bool(new_value)))
 
-    elif isinstance(old_value, dict) and isinstance(new_value, dict):
-        return {
-            'status': 'nested',
-            'value': collect_diff_dicts(old_value, new_value)
-        }
-
-    elif old_value == new_value:
-        return {
-            'status': UNCHANGED,
-            'value': old_value,
-        }
-
-    elif old_value != new_value:
-        return {
-            'status': CHANGED,
-            'value': (old_value, new_value)
-        }
+    return diff_values(old_value, new_value)
 
 
 def collect_diff_dicts(old_dict: dict, new_dict: dict) -> dict:
