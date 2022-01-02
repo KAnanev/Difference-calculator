@@ -20,11 +20,13 @@ def test_parser_args():
 def test_bool_to_string():
     assert bool_to_string(False) == 'false'
     assert bool_to_string(True) == 'true'
+    assert bool_to_string('') == 'null'
 
 
 def test_get_diff_value():
     assert get_diff_value(None, 'value') == {'status': ADDED, 'value': 'value'}
     assert get_diff_value('value', None) == {'status': REMOVED, 'value': 'value'}
+    assert get_diff_value(True, None)
     assert get_diff_value('value', 'value') == {'status': UNCHANGED, 'value': 'value'}
     assert get_diff_value('value', 'an_value') == {'status': CHANGED, 'value': ('value', 'an_value')}
 
@@ -49,6 +51,7 @@ def test_get_diff_value():
 
 def test_collect_diff_dicts(collect_diff_dict):
     assert collect_diff_dicts({'key': 'value'}, {'key': 'value'}) == {'key': {'status': UNCHANGED, 'value': 'value'}}
+
     assert collect_diff_dicts({'follow': False, 'host': 'hexlet.io', 'timeout': 50, 'proxy': '123.234.53.22'},
                               {'timeout': 20, 'verbose': True, 'host': 'hexlet.io'}) == collect_diff_dict
 

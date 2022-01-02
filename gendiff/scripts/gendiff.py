@@ -48,7 +48,11 @@ ACTION_STATUS = {
 def bool_to_string(value: bool) -> not bool:
     """Функция преобразования булева значения в строку"""
     if isinstance(value, bool):
-        return str(value).lower()
+        value = str(value).lower()
+    elif not value:
+        value = 'null'
+    else:
+        value = value
     return value
 
 
@@ -71,7 +75,7 @@ def collect_diff_dicts(old_dict: dict, new_dict: dict) -> dict:
     keys = list(old_dict.keys() | new_dict.keys())
     return {
         key: get_diff_value(
-            bool_to_string(old_dict.get(key)), bool_to_string(new_dict.get(key))
+            bool_to_string(old_dict.get(key, default='None')), bool_to_string(new_dict.get(key, default='None'))
         ) for key in sorted(keys)
     }
 
