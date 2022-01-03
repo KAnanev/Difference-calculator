@@ -1,83 +1,7 @@
 import sys
 
-from gendiff.parser import get_data, parse_args
-
-ADDED = ('added', '+',)
-REMOVED = ('removed', '-',)
-UNCHANGED = ('unchanged', ' ',)
-CHANGED = ('changed', '-+',)
-
-
-def inv_dict(status, value):
-    return {
-        'status': status,
-        'value': value,
-    }
-
-
-def add_(*args):
-    return inv_dict(ADDED, args[1])
-
-
-def rm_(*args):
-    return inv_dict(REMOVED, args[0])
-
-
-def un_change_(*args):
-    return inv_dict(UNCHANGED, args[1])
-
-
-def change_(*args):
-    return inv_dict(CHANGED, args)
-
-
-def diff_dicts_(*args):
-    return inv_dict('nested', collect_diff_dicts(*args))
-
-
-ACTION_STATUS = {
-    (True, False): rm_,
-    (False, True): add_,
-    True: un_change_,
-    False: change_,
-    (True, True): diff_dicts_,
-
-}
-
-
-def bool_to_string(value: bool) -> not bool:
-    """Функция преобразования булева значения в строку"""
-    if isinstance(value, bool):
-        value = str(value).lower()
-    elif not value:
-        value = 'null'
-    else:
-        value = value
-    return value
-
-
-def get_diff_value(old_value, new_value):
-    """Функция разности двух значений"""
-
-    if old_value and new_value:
-        if isinstance(old_value, dict) and isinstance(new_value, dict):
-            diff_values = ACTION_STATUS.get((bool(old_value), bool(new_value)))
-        else:
-            diff_values = ACTION_STATUS.get(old_value == new_value)
-    else:
-        diff_values = ACTION_STATUS.get((bool(old_value), bool(new_value)))
-
-    return diff_values(old_value, new_value)
-
-
-def collect_diff_dicts(old_dict: dict, new_dict: dict) -> dict:
-    """Функция разности двух словарей"""
-    keys = list(old_dict.keys() | new_dict.keys())
-    return {
-        key: get_diff_value(
-            bool_to_string(old_dict.get(key, default='None')), bool_to_string(new_dict.get(key, default='None'))
-        ) for key in sorted(keys)
-    }
+from gendiff.parser import deserializer, parse_args
+from gendiff.differ import CHANGED, collect_diff_dicts
 
 
 def render_string(key, value) -> str:
@@ -97,8 +21,8 @@ def render(diff_dict: dict) -> str:
 
 
 def generate_diff(before_file, after_file):
-    before_dict = get_data(before_file)
-    after_dict = get_data(after_file)
+    before_dict = deserializer(before_file)
+    after_dict = deserializer(after_file)
     diff_dict = collect_diff_dicts(before_dict, after_dict)
 
     return render(diff_dict)

@@ -4,14 +4,23 @@ import json
 import yaml
 
 
-def get_data(file_path: str):
+def yaml_load(load_file):
+    return yaml.load(load_file, yaml.SafeLoader)
+
+
+MAPPING_LOAD = {
+    '.json': json.load,
+    '.yaml': yaml_load,
+    '.yml': yaml_load,
+}
+
+
+def deserializer(file_path: str):
     _, file_extension = os.path.splitext(file_path)
 
     with open(file_path) as file:
-        if file_extension == '.json':
-            return json.load(file)
-        elif file_extension in ('.yaml', '.yml'):
-            return yaml.load(file, yaml.SafeLoader)
+        reads_from_file = MAPPING_LOAD.get(file_extension)
+        return reads_from_file(file)
 
 
 def parse_args(args):

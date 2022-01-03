@@ -1,5 +1,4 @@
 import pytest
-import json
 
 
 @pytest.fixture
@@ -27,9 +26,9 @@ def collect_diff_dict():
 def collect_nested_diff_dict():
     return {
         'common': {
-            'status': 'nested','value': {
+            'status': 'nested', 'value': {
                 'follow': {'status': ('added', '+'), 'value': 'false'},
-                'setting1': {'status': ('unchanged', ' '),'value': 'Value 1'},
+                'setting1': {'status': ('unchanged', ' '), 'value': 'Value 1'},
                 'setting2': {'status': ('removed', '-'), 'value': 200},
                 'setting3': {'status': ('removed', '-'), 'value': 'true'},
                 'setting4': {'status': ('added', '+'), 'value': 'blah blah'},
@@ -39,7 +38,7 @@ def collect_nested_diff_dict():
                         'wow': {'status': ('added', '+'), 'value': 'so ' 'much'}
                     }
                              },
-                    'key': {'status': ('unchanged',' '), 'value': 'value'},
+                    'key': {'status': ('unchanged', ' '), 'value': 'value'},
                     'ops': {'status': ('added', '+'), 'value': 'vops'}
                 }
                              }
