@@ -2,7 +2,7 @@ ADDED = ('added', '+',)
 REMOVED = ('removed', '-',)
 UNCHANGED = ('unchanged', ' ',)
 CHANGED = ('changed', '-+',)
-NESTED = 'nested'
+NESTED = ('nested', ' ')
 
 
 def collect_dict(status, value):
@@ -30,7 +30,7 @@ def change_(*args):
 
 
 def diff_dicts_(*args):
-    return collect_dict(NESTED, collect_diff_dicts(*args))
+    return collect_dict(NESTED[0], collect_diff_dicts(*args))
 
 
 ACTION_STATUS = {
