@@ -7,7 +7,7 @@ def render_string(key, value) -> str:
         return f' {operator[0]} {key}: {value["value"][0]}\n' \
                f' {operator[1]} {key}: {value["value"][1]}'
     elif value['status'] == NESTED:
-        return f' {operator} {key}: {render(value)}'
+        return f' {operator} {key}: {render(value["value"])}'
     else:
         return f' {operator} {key}: {value["value"]}'
 
