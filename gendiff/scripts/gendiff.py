@@ -6,6 +6,7 @@ from gendiff.differ import collect_diff_dicts
 
 
 def generate_diff(before_file, after_file):
+    """Генерирует разность двух файлов"""
     before_dict = deserializer(before_file)
     after_dict = deserializer(after_file)
     diff_dict = collect_diff_dicts(before_dict, after_dict)
