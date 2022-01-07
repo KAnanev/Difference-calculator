@@ -30,7 +30,7 @@ def change_(*args):
 
 
 def diff_dicts_(*args):
-    return collect_dict(NESTED[0], collect_diff_dicts(*args))
+    return collect_dict(NESTED, collect_diff_dicts(*args))
 
 
 ACTION_STATUS = {
@@ -51,7 +51,7 @@ def check_string(value):
         False: 'false',
         'empty': None,
     }
-    if type(value) in (float, int):
+    if type(value) in (float, int, dict):
         return value
     return mapping.get(value, value)
 
