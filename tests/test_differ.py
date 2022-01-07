@@ -26,7 +26,6 @@ def test_get_diff_value():
             }
         }
     }
-
     assert get_diff_value({'key': 'value'}, {'key': 'an_value'}) == {
         'status': 'nested', 'value': {
             'key': {
@@ -34,6 +33,7 @@ def test_get_diff_value():
             }
         }
     }
+    assert get_diff_value(None, {'key': 'value'}) == {'status': ADDED, 'value': {'key': 'value'}}
 
 
 def test_collect_diff_dicts(collect_diff_dict):
