@@ -19,6 +19,9 @@ def collect_diff_dict():
         'proxy': {'status': ('removed', '-'), 'value': '123.234.53.22'},
         'timeout': {'status': ('changed', '-+'), 'value': (50, 20)},
         'verbose': {'status': ('added', '+'), 'value': 'true'},
+        'setting5': {'status': ('added', '+'), 'value': {'key5': 'value5'}},
+        'nest': {'status': ('changed', '-+'), 'value': ({'key': 'value'}, 'str')},
+        'group3': {'status': ('added', '+'), 'value': {'deep': {'id': {'number': 45}},'fee': 100500}}
     }
 
 @pytest.fixture()
@@ -97,7 +100,8 @@ def collect_nested_diff_dict():
                     'id': {
                         'number': 45
                     }
-                }, 'fee': 100500
+                },
+                'fee': 100500
             }
         }
     }
