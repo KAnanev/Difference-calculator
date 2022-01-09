@@ -62,7 +62,7 @@ def collect_nested_diff_dict():
                         'doge': {
                             'status': ('nested', ' '), 'value': {
                                 'wow': {
-                                    'status': ('added', '+'), 'value': 'so much'
+                                    'status': ('changed', '-+'), 'value': ('', 'so much')
                                 }
                             }
                         },

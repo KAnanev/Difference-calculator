@@ -12,10 +12,11 @@ def test_check_string():
 
 
 def test_get_plain_diff_value():
-    assert get_diff_value(None, 'value') == {'status': ADDED, 'value': 'value'}
-    assert get_diff_value('value', None) == {'status': REMOVED, 'value': 'value'}
-    assert get_diff_value('value', 'value') == {'status': UNCHANGED, 'value': 'value'}
-    assert get_diff_value('value', 'an_value') == {'status': CHANGED, 'value': ('value', 'an_value')}
+    assert get_diff_value('key', {}, {'key': 'value'}) == {'status': ADDED, 'value': 'value'}
+    assert get_diff_value('key', {'key': 'value'}, {}) == {'status': REMOVED, 'value': 'value'}
+    assert get_diff_value('key', {'key': 0}, {'key': 0}) == {'status': UNCHANGED, 'value': 0}
+    assert get_diff_value('key', {'key': ''}, {'key': '0'}) == {'status': CHANGED, 'value': ('', '0')}
+    assert get_diff_value('key', {'key': False}, {'key': True}) == {'status': CHANGED, 'value': ('false', 'true')}
 
 
 def test_get_nested_diff_value():
@@ -36,6 +37,14 @@ def test_get_nested_diff_value():
         }
     }
     assert get_diff_value(None, {'key': 'value'}) == {'status': ADDED, 'value': {'key': 'value'}}
+
+    assert get_diff_value({'wow': ''}, {'wow': 'so much'}) == {
+        'status': NESTED, 'value': {
+            'wow': {
+                'status': CHANGED, 'value': ('', 'so much')
+            }
+        }
+    }
 
 
 def test_collect_diff_dicts(collect_diff_dict):

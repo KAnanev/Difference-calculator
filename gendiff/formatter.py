@@ -7,17 +7,17 @@ from gendiff.differ import CHANGED, NESTED
 def dict_to_str(data: dict or str, level) -> str:
     if not isinstance(data, dict):
         return data
-    indent = '  ' * level
+    indent = '    ' * level
     lines = []
     for key, val in data.items():
-        lines.append(f'{indent}{key}: {dict_to_str(val, indent)}')
+        lines.append(f'{indent}{key}: {dict_to_str(val, level + 1)}')
     result = itertools.chain("{", lines, [indent + "}"])
     return '\n'.join(result)
 
 
 def render_string(key, value, level) -> str:
     operator = value['status'][1]
-    indent = '  ' * level
+    indent = '     ' * level
 
     if value['status'] == CHANGED:
         result = f'{indent} {operator[0]} {key}: {dict_to_str(value["value"][0], level + 1)}\n' \
@@ -49,7 +49,7 @@ def stringify(value, replacer=' ', spaces_count=1):
 
 def render(diff_dict: dict, level=0) -> str:
     """Функция форматирования словаря в строку"""
-    indent = '  ' * level
+    indent = '     ' * level
 
     result = [render_string(key, value, level) for key, value in diff_dict.items()]
     result = itertools.chain("{", result, [indent + "}"])
