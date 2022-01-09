@@ -11,6 +11,9 @@ def test_render_string(collect_diff_dict):
         , 0) == "   common: ['   + follow: false']"
 
 
+str_ = '{\nkey5: value5\n}'
+
+
 def test_plain_render(collect_diff_dict):
     assert render(collect_diff_dict) == output_plain
 
