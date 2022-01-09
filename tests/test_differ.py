@@ -20,40 +20,30 @@ def test_get_plain_diff_value():
 
 
 def test_get_nested_diff_value():
-    assert get_diff_value({'key': 'value'}, 'value') == {'status': CHANGED, 'value': ({'key': 'value'}, 'value')}
-    assert get_diff_value('value', {'key': 'value'}) == {'status': CHANGED, 'value': ('value', {'key': 'value'})}
-    assert get_diff_value({'key': 'value'}, {'key': 'value'}) == {
+    assert get_diff_value('key', {'key': {'key': 'value'}}, {'key': 'value'}) == {'status': CHANGED,
+                                                                                  'value': ({'key': 'value'}, 'value')}
+    assert get_diff_value('key', {'key': 'value'}, {'key': {'key': 'value'}}) == {'status': CHANGED,
+                                                                                  'value': ('value', {'key': 'value'})}
+    assert get_diff_value('key', {'key': {'key': 'value'}}, {'key': {'key': 'value'}}) == {
         'status': NESTED, 'value': {
             'key': {
                 'status': UNCHANGED, 'value': 'value'
             }
         }
     }
-    assert get_diff_value({'key': 'value'}, {'key': 'an_value'}) == {
+    assert get_diff_value('key', {'key': {'key': 'value'}}, {'key': {'key': 'an_value'}}) == {
         'status': NESTED, 'value': {
             'key': {
                 'status': CHANGED, 'value': ('value', 'an_value')
             }
         }
     }
-    assert get_diff_value(None, {'key': 'value'}) == {'status': ADDED, 'value': {'key': 'value'}}
-
-    assert get_diff_value({'wow': ''}, {'wow': 'so much'}) == {
-        'status': NESTED, 'value': {
-            'wow': {
-                'status': CHANGED, 'value': ('', 'so much')
-            }
-        }
-    }
 
 
 def test_collect_diff_dicts(collect_diff_dict):
-    assert collect_diff_dicts({'key': None}, {'key': 'value'}) == {
-        'key': {'status': CHANGED, 'value': ('null', 'value')}}
+    assert collect_diff_dicts(
+        {'key': None}, {'key': 'value'}) == {'key': {'status': CHANGED, 'value': ('null', 'value')}}
     assert collect_diff_dicts({'key': 'value'}, {'key': 'value'}) == {'key': {'status': UNCHANGED, 'value': 'value'}}
-
-    assert collect_diff_dicts({'follow': 'false', 'host': 'hexlet.io', 'timeout': 50, 'proxy': '123.234.53.22'},
-                              {'timeout': 20, 'verbose': 'true', 'host': 'hexlet.io'}) == collect_diff_dict
 
     assert collect_diff_dicts(
         {
@@ -67,17 +57,15 @@ def test_collect_diff_dicts(collect_diff_dict):
             }
         }
     ) == {
-        'key_1': {
-            'status': ('nested', ' '), 'value': {
-                'key_1_1': {
-                    'status': ('changed', '-+'), 'value': ('value_1_1', 'an_value_1_1')
-                }
-            }
-        }
-    }
+               'key_1': {
+                   'status': ('nested', ' '), 'value': {
+                       'key_1_1': {
+                           'status': ('changed', '-+'), 'value': ('value_1_1', 'an_value_1_1')
+                       }
+                   }
+               }
+           }
 
 
 def test_nested_collect_diff_dicts(before_dict, after_dict, collect_nested_diff_dict):
     assert collect_diff_dicts(before_dict, after_dict) == collect_nested_diff_dict
-
-

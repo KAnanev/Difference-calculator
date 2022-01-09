@@ -21,7 +21,7 @@ def collect_diff_dict():
         'verbose': {'status': ('added', '+'), 'value': 'true'},
         'setting5': {'status': ('added', '+'), 'value': {'key5': 'value5'}},
         'nest': {'status': ('changed', '-+'), 'value': ({'key': 'value'}, 'str')},
-        'group3': {'status': ('added', '+'), 'value': {'deep': {'id': {'number': 45}},'fee': 100500}}
+        'group3': {'status': ('added', '+'), 'value': {'deep': {'id': {'number': 45}}, 'fee': 100500}}
     }
 
 @pytest.fixture()

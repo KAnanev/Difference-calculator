@@ -48,6 +48,8 @@ def check_string(value):
     mapping = {
         True: 'true',
         False: 'false',
+        None: 'null',
+        'empty': None,
     }
     if type(value) in (float, int, dict):
         return value
@@ -56,21 +58,19 @@ def check_string(value):
 
 def get_diff_value(key, old_dict, new_dict):
     """Получает разность двух значений"""
-    old_value = old_dict.get(key)
-    new_value = new_dict.get(key)
+    old_value = check_string(old_dict.get(key, 'empty'))
+    new_value = check_string(new_dict.get(key, 'empty'))
 
     bool_value = (bool(old_value), bool(new_value))
 
     if old_value is None or new_value is None:
         diff_values = ACTION_STATUS.get(bool_value)
-    elif isinstance(old_value, dict) and (new_value, dict):
+    elif isinstance(old_value, dict) and isinstance(new_value, dict):
         diff_values = ACTION_STATUS.get(bool_value)
     else:
         diff_values = ACTION_STATUS.get(old_value == new_value)
 
-    return diff_values(check_string(old_value), check_string(new_value))
-
-
+    return diff_values(old_value, new_value)
 
 
 def collect_diff_dicts(old_dict: dict, new_dict: dict) -> dict:
