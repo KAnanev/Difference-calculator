@@ -6,18 +6,19 @@ def test_render_string(collect_diff_dict):
     assert render_string('host', collect_diff_dict['host'], 0) == '   host: hexlet.io'
     assert render_string('host', collect_diff_dict['host'], 0) != ' - host: hexlet.io'
     assert render_string('timeout', collect_diff_dict['timeout'], 0) == ' - timeout: 50\n + timeout: 20'
-    # assert render_string(
-    #     'common', {'status': ('nested', ' '), 'value': {'follow': {'status': ('added', '+'), 'value': 'false'}}}
-    #     , 0) == "   common: ['   + follow: false']"
-
-    print(render_string(
+    assert render_string(
         'common', {'status': ('nested', ' '), 'value': {'follow': {'status': ('added', '+'), 'value': 'false'}}}
-        , 0))
+        , 0) == "   common: ['   + follow: false']"
 
 
 def test_plain_render(collect_diff_dict):
     assert render(collect_diff_dict) == output_plain
 
 
+
+
 def test_nested_render(collect_nested_diff_dict):
-    assert render(collect_nested_diff_dict) == output_nested
+    assert render(
+        {'setting5': {'status': ('added', '+'), 'value': {'key5': 'value5'}}}
+    ) == '{\n + setting5: {\n        key5: value5\n    }\n}'
+    # assert render(collect_nested_diff_dict) == output_nested

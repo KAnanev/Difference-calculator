@@ -1,14 +1,15 @@
 import itertools
-from typing import List
+from itertools import chain
+from typing import List, Any
 
 from gendiff.differ import CHANGED, NESTED
 
 
-def render_string(key, value, level) -> str:
+def render_string(key, value, level) -> chain[Any]:
+
     operator = value['status'][1]
     indent = '  ' * level
-    # result = []
-    status = value['status']
+
     if value['status'] == CHANGED:
         result = f'{indent} {operator[0]} {key}: {value["value"][0]}\n' \
                  f'{indent} {operator[1]} {key}: {value["value"][1]}'
@@ -16,6 +17,7 @@ def render_string(key, value, level) -> str:
         result = f'{indent} {operator} {key}: {render(value["value"], level + 1)}'
     else:
         result = f'{indent} {operator} {key}: {value["value"]}'
+
     return result
 
 
@@ -42,7 +44,7 @@ def render(diff_dict: dict, level=0) -> str:
     """Функция форматирования словаря в строку"""
     # result = []
     result = [render_string(key, value, level) for key, value in diff_dict.items()]
-
+    result = itertools.chain("{", result, [level * '  ' + "}"])
     # for key, value in diff_dict.items():
     #     result.append(render_string(key, value, level))
 
