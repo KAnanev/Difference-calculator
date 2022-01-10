@@ -18,7 +18,9 @@ def main():  # pragma: no cover
     parser = parse_args(sys.argv[1:])
 
     if parser.first_file and parser.second_file:
-        print(generate_diff(parser.first_file, parser.second_file, parser.format))
+        print(
+            generate_diff(parser.first_file, parser.second_file, parser.format)
+        )
 
 
 if __name__ == '__main__':  # pragma: no cover
