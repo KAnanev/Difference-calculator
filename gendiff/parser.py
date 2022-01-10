@@ -31,8 +31,8 @@ def parse_args(args):
     parser.add_argument('second_file', type=str, )
     parser.add_argument(
         '-f', '--format',
-        type=str, default='FORMAT',
-        help='set format of output',
+        type=str, default='stylish',
+        help='set formatter of output',
     )
 
     return parser.parse_args(args)

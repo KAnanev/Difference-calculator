@@ -11,4 +11,6 @@ def test_parse_args():
     parser = parse_args(['file.json', 'file.json'])
     assert parser.first_file
     assert parser.second_file
-    assert parser.format
+    assert parser.format == 'stylish'
+
+

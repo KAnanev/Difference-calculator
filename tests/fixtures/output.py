@@ -12,8 +12,8 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
-  -f FORMAT, --format FORMAT
-                        set format of output"""
+  -f FORMAT, --formatter FORMAT
+                        set formatter of output"""
 
 output_plain = """{
  - follow: false
