@@ -2,26 +2,15 @@ output_error_cli = """usage: gendiff [-h] [-f FORMAT] first_file second_file
 gendiff: error: the following arguments are required: first_file, second_file
 """
 
-output_cli_help = """usage: gendiff [-h] [-f FORMAT] first_file second_file
-
-Generate diff
-
-positional arguments:
-  first_file
-  second_file
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -f FORMAT, --formatter FORMAT
-                        set formatter of output"""
+output_cli_help = b'usage: gendiff [-h] [-f FORMAT] first_file second_file\n\nGenerate diff\n\npositional arguments:\n  first_file\n  second_file\n\noptions:\n  -h, --help            show this help message and exit\n  -f FORMAT, --format FORMAT\n                        set formatter of output\n'
 
 output_plain = """{
- - follow: false
-   host: hexlet.io
- - proxy: 123.234.53.22
- - timeout: 50
- + timeout: 20
- + verbose: true
+  - follow: false
+    host: hexlet.io
+  - proxy: 123.234.53.22
+  - timeout: 50
+  + timeout: 20
+  + verbose: true
 }"""
 
 output_nested = """{

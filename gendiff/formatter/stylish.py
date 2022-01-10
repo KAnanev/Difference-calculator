@@ -10,8 +10,8 @@ def dict_to_str(data: dict or str, level) -> str:
     indent = '    ' * level
     lines = []
     for key, val in data.items():
-        lines.append(f'{indent}   {key}: {dict_to_str(val, level + 1)}')
-    result = itertools.chain("{", lines, [indent + " }"])
+        lines.append(f'{indent}    {key}: {dict_to_str(val, level + 1)}')
+    result = itertools.chain("{", lines, [indent + "}"])
     return '\n'.join(result)
 
 
@@ -21,12 +21,12 @@ def render_string(key, value, level) -> str:
     indent = '    ' * level
 
     if value['status'] == CHANGED:
-        result = f'{indent} {operator[0]} {key}: {dict_to_str(value["value"][0], level + 1)}\n' \
-                 f'{indent} {operator[1]} {key}: {dict_to_str(value["value"][1], level + 1)}'
+        result = f'{indent}  {operator[0]} {key}: {dict_to_str(value["value"][0], level + 1)}\n' \
+                 f'{indent}  {operator[1]} {key}: {dict_to_str(value["value"][1], level + 1)}'
     elif value['status'] == NESTED:
-        result = f'{indent} {operator} {key}: {render_stylish(value["value"], level + 1)}'
+        result = f'{indent}  {operator} {key}: {render_stylish(value["value"], level + 1)}'
     else:
-        result = f'{indent} {operator} {key}: {dict_to_str(value["value"], level + 1)}'
+        result = f'{indent}  {operator} {key}: {dict_to_str(value["value"], level + 1)}'
     return result
 
 
