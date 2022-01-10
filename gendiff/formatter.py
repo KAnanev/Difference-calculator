@@ -7,17 +7,17 @@ from gendiff.differ import CHANGED, NESTED
 def dict_to_str(data: dict or str, level) -> str:
     if not isinstance(data, dict):
         return data
-    indent = '    ' * level
+    indent = '  ' * level
     lines = []
     for key, val in data.items():
-        lines.append(f'{indent}{key}: {dict_to_str(val, level + 1)}')
-    result = itertools.chain("{", lines, [indent + "}"])
+        lines.append(f'{indent}   {key}: {dict_to_str(val, level + 1)}')
+    result = itertools.chain("{", lines, [indent + " }"])
     return '\n'.join(result)
 
 
 def render_string(key, value, level) -> str:
     operator = value['status'][1]
-    indent = '     ' * level
+    indent = '  ' * level
 
     if value['status'] == CHANGED:
         result = f'{indent} {operator[0]} {key}: {dict_to_str(value["value"][0], level + 1)}\n' \
