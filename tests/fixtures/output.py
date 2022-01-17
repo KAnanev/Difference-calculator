@@ -2,7 +2,12 @@ output_error_cli = """usage: gendiff [-h] [-f FORMAT] first_file second_file
 gendiff: error: the following arguments are required: first_file, second_file
 """
 
-output_cli_help = b'usage: gendiff [-h] [-f FORMAT] first_file second_file\n\nGenerate diff\n\npositional arguments:\n  first_file\n  second_file\n\noptions:\n  -h, --help            show this help message and exit\n  -f FORMAT, --format FORMAT\n                        set formatter of output\n'
+output_cli_help = b'usage: gendiff [-h] [-f FORMAT] first_file second_file' \
+                  b'\n\nGenerate diff\n\npositional arguments:\n  ' \
+                  b'first_file\n  second_file\n\noptions:\n  -h, --help    ' \
+                  b'        show this help message and exit\n  -f FORMAT, ' \
+                  b'--format FORMAT\n                        set formatter ' \
+                  b'of output\n'
 
 output_plain = """{
   - follow: false
@@ -56,4 +61,4 @@ output_nested = """{
         }
         fee: 100500
     }
-}"""
+}"""  # noqa: W291

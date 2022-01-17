@@ -42,7 +42,7 @@ def path_to_nested_after_yaml_file():
 
 
 @pytest.fixture()
-def collect_diff_dict():
+def diff_flat_dicts():
     return {
         'follow': {'status': ('removed', '-'), 'value': 'false'},
         'host': {'status': ('unchanged', ' '), 'value': 'hexlet.io'},
@@ -53,7 +53,7 @@ def collect_diff_dict():
 
 
 @pytest.fixture()
-def before_dict():
+def before_nested_dict():
     return {'common': {'setting1': 'Value 1', 'setting2': 200, 'setting3': True,
                        'setting6': {'key': 'value', 'doge': {'wow': ''}}},
             'group1': {'baz': 'bas', 'foo': 'bar', 'nest': {'key': 'value'}},
@@ -61,16 +61,27 @@ def before_dict():
 
 
 @pytest.fixture()
-def after_dict():
-    return {'common': {'follow': False, 'setting1': 'Value 1', 'setting3': None, 'setting4': 'blah blah',
-                       'setting5': {'key5': 'value5'},
-                       'setting6': {'key': 'value', 'ops': 'vops', 'doge': {'wow': 'so much'}}},
-            'group1': {'foo': 'bar', 'baz': 'bars', 'nest': 'str'},
-            'group3': {'deep': {'id': {'number': 45}}, 'fee': 100500}}
+def after_nested_dict():
+    return {
+        'common': {
+            'follow': False,
+            'setting1': 'Value 1',
+            'setting3': None,
+            'setting4':
+                'blah blah',
+            'setting5': {'key5': 'value5'},
+            'setting6': {
+                'key': 'value', 'ops': 'vops', 'doge': {
+                    'wow': 'so much'
+                }
+            }
+        },
+        'group1': {'foo': 'bar', 'baz': 'bars', 'nest': 'str'},
+        'group3': {'deep': {'id': {'number': 45}}, 'fee': 100500}}
 
 
 @pytest.fixture()
-def collect_nested_diff_dict():
+def diff_nested_dicts():
     return {
         'common': {
             'status': ('nested', ' '), 'value': {
@@ -78,34 +89,42 @@ def collect_nested_diff_dict():
                     'status': ('added', '+'), 'value': 'false'
                 },
                 'setting1': {
-                    'status': ('unchanged', ' '), 'value': 'Value 1'
+                    'status': ('unchanged', ' '),
+                    'value': 'Value 1'
                 },
                 'setting2': {
-                    'status': ('removed', '-'), 'value': 200
+                    'status': ('removed', '-'),
+                    'value': 200
                 },
                 'setting3': {
-                    'status': ('changed', '-+'), 'value': ('true', 'null')
+                    'status': ('changed', '-+'),
+                    'value': ('true', 'null')
                 },
                 'setting4': {
-                    'status': ('added', '+'), 'value': 'blah blah'
+                    'status': ('added', '+'),
+                    'value': 'blah blah'
                 },
                 'setting5': {
-                    'status': ('added', '+'), 'value': {'key5': 'value5'}
+                    'status': ('added', '+'),
+                    'value': {'key5': 'value5'}
                 },
                 'setting6': {
                     'status': ('nested', ' '), 'value': {
                         'doge': {
                             'status': ('nested', ' '), 'value': {
                                 'wow': {
-                                    'status': ('changed', '-+'), 'value': ('', 'so much')
+                                    'status': ('changed', '-+'),
+                                    'value': ('', 'so much')
                                 }
                             }
                         },
                         'key': {
-                            'status': ('unchanged', ' '), 'value': 'value'
+                            'status': ('unchanged', ' '),
+                            'value': 'value'
                         },
                         'ops': {
-                            'status': ('added', '+'), 'value': 'vops'
+                            'status': ('added', '+'),
+                            'value': 'vops'
                         }
                     }
                 }
@@ -114,13 +133,15 @@ def collect_nested_diff_dict():
         'group1': {
             'status': ('nested', ' '), 'value': {
                 'baz': {
-                    'status': ('changed', '-+'), 'value': ('bas', 'bars')
+                    'status': ('changed', '-+'),
+                    'value': ('bas', 'bars')
                 },
                 'foo': {
                     'status': ('unchanged', ' '), 'value': 'bar'
                 },
                 'nest': {
-                    'status': ('changed', '-+'), 'value': ({'key': 'value'}, 'str')
+                    'status': ('changed', '-+'),
+                    'value': ({'key': 'value'}, 'str')
                 }
             }
         },

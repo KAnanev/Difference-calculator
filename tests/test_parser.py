@@ -12,5 +12,3 @@ def test_parse_args():
     assert parser.first_file
     assert parser.second_file
     assert parser.format == 'stylish'
-
-

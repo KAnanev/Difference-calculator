@@ -2,7 +2,7 @@ install:
 		poetry install
 
 lint:
-		poetry run flake8 gendiff
+		poetry run flake8
 
 build:
 		poetry build
@@ -11,7 +11,7 @@ test:
 		poetry run pytest
 
 coverage:
-		poetry run coverage run --omit '.venv/*' -m pytest tests/*.py
+		poetry run coverage run -m pytest
 
 coverage_xml:
 		poetry run coverage xml
