@@ -1,6 +1,6 @@
 import subprocess
 
-from tests.fixtures.output import output_plain, output_cli_help, \
+from tests.fixtures.output import output_flat, output_cli_help, \
     output_error_cli, output_nested
 
 
@@ -36,7 +36,7 @@ def test_cli_diff_plain():
                'data/before_flat.json', 'data/after_flat.json']
     out, err, exitcode = capture(command)
     assert exitcode == 0
-    assert out.startswith(output_plain.encode())
+    assert out.startswith(output_flat.encode())
     assert err == b''
 
 
