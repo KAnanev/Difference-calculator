@@ -2,9 +2,9 @@ from gendiff.parser import deserializer, parse_args
 
 
 def test_deserializer():
-    assert isinstance(deserializer('data/before_plain.json'), dict)
-    assert isinstance(deserializer('data/before_plain.yaml'), dict)
-    assert isinstance(deserializer('data/after_plain.yml'), dict)
+    assert isinstance(deserializer('data/before_flat.json'), dict)
+    assert isinstance(deserializer('data/before_flat.yaml'), dict)
+    assert isinstance(deserializer('data/after_flat.yml'), dict)
 
 
 def test_parse_args():

@@ -3,22 +3,22 @@ import pytest
 
 @pytest.fixture()
 def path_to_plain_before_json_file():
-    return 'data/before_plain.json'
+    return 'data/before_flat.json'
 
 
 @pytest.fixture()
 def path_to_plain_after_json_file():
-    return 'data/after_plain.json'
+    return 'data/after_flat.json'
 
 
 @pytest.fixture()
 def path_to_plain_before_yaml_file():
-    return 'data/before_plain.yaml'
+    return 'data/before_flat.yaml'
 
 
 @pytest.fixture()
 def path_to_plain_after_yml_file():
-    return 'data/after_plain.yml'
+    return 'data/after_flat.yml'
 
 
 @pytest.fixture

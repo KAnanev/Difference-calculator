@@ -31,7 +31,7 @@ def test_cli_help():
 
 
 def test_cli_diff_plain():
-    command = ['poetry', 'run', 'gendiff', 'data/before_plain.json', 'data/after_plain.json']
+    command = ['poetry', 'run', 'gendiff', 'data/before_flat.json', 'data/after_flat.json']
     out, err, exitcode = capture(command)
     assert exitcode == 0
     assert out.startswith(output_plain.encode())
