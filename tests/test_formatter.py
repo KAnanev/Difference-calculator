@@ -1,6 +1,6 @@
 from gendiff.formatter.formatter import render
 from gendiff.formatter.stylish import render_string, render_stylish
-from tests.fixtures.output import output_flat, output_nested
+from tests.fixtures.output import output_flat, output_nested_stylish
 
 
 def test_flat_render_string(diff_flat_dicts):
@@ -20,7 +20,7 @@ def test_flat_render(diff_flat_dicts):
 
 
 def test_nested_render(diff_nested_dicts):
-    assert render_stylish(diff_nested_dicts) == output_nested
+    assert render_stylish(diff_nested_dicts) == output_nested_stylish
 
 
 def test_flat_render_stylish(diff_flat_dicts):

@@ -1,5 +1,7 @@
 import pytest
 
+from gendiff.parser import deserializer
+
 
 @pytest.fixture()
 def path_to_plain_before_json_file():
@@ -39,6 +41,16 @@ def path_to_nested_before_yaml_file():
 @pytest.fixture()
 def path_to_nested_after_yaml_file():
     return 'data/after_nested.yaml'
+
+
+@pytest.fixture()
+def before_flat_dict():
+    return deserializer('before_flat.json')
+
+
+@pytest.fixture()
+def after_flat_dict():
+    return deserializer('after_flat.json')
 
 
 @pytest.fixture()
