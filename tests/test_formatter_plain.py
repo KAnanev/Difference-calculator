@@ -13,13 +13,13 @@ def test_render_plain_flat(diff_flat_dicts):
 
 def test_render_plain_string_flat(diff_flat_dicts):
     assert render_plain_string(
-        diff_flat_dicts['follow']
+        'follow', diff_flat_dicts['follow']
     ) == "Property 'follow' was removed"
     assert render_plain_string(
-        diff_flat_dicts['timeout']
+        'timeout', diff_flat_dicts['timeout']
     ) == "Property 'timeout' was updated. From 50 to 20"
     assert render_plain_string(
-        diff_flat_dicts['verbose']
+        'verbose', diff_flat_dicts['verbose']
     ) == "Property 'verbose' was added with value: 'true'"
 
 
