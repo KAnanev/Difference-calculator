@@ -30,4 +30,50 @@ def test_render_plain_nested(diff_nested_dicts):
 
 
 def test_render_plain_string_nested(diff_nested_dicts):
-    pass
+    nested_dict_add = {
+        'common': {
+            'status': ('nested', ' '), 'value': {
+                'follow': {
+                    'status': ('added', '+'),
+                    'value': 'false'
+                }
+            }
+        }
+    }
+    assert render_plain_string(
+        nested_dict_add
+    ) == "Property 'common.follow' was added with value: false"
+
+    nested_dict_complex = {
+        'common': {
+            'status': ('nested', ' '), 'value': {
+                'setting5': {
+                    'status': ('added', '+'),
+                    'value': {'key5': 'value5'}
+                }
+            }
+        }
+    }
+
+    assert render_plain_string(
+        nested_dict_complex
+    ) == "Property 'common.setting5' was added with value: [complex value]"
+
+    nested_dict_complex_str = {
+        'group1': {
+            'status': ('nested', ' '), 'value': {
+                'baz': {
+                    'status': ('changed', '-+'),
+                    'value': ('bas', 'bars')
+                },
+                'nest': {
+                    'status': ('changed', '-+'),
+                    'value': ({'key': 'value'}, 'str')
+                }
+            }
+        }
+    }
+
+    assert render_plain_string(
+        nested_dict_complex_str
+    ) == "Property 'group1.nest' was updated. From [complex value] to 'str'"

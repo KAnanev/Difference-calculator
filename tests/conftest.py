@@ -98,7 +98,8 @@ def diff_nested_dicts():
         'common': {
             'status': ('nested', ' '), 'value': {
                 'follow': {
-                    'status': ('added', '+'), 'value': 'false'
+                    'status': ('added', '+'),
+                    'value': 'false'
                 },
                 'setting1': {
                     'status': ('unchanged', ' '),
@@ -121,9 +122,11 @@ def diff_nested_dicts():
                     'value': {'key5': 'value5'}
                 },
                 'setting6': {
-                    'status': ('nested', ' '), 'value': {
+                    'status': ('nested', ' '),
+                    'value': {
                         'doge': {
-                            'status': ('nested', ' '), 'value': {
+                            'status': ('nested', ' '),
+                            'value': {
                                 'wow': {
                                     'status': ('changed', '-+'),
                                     'value': ('', 'so much')
@@ -158,12 +161,14 @@ def diff_nested_dicts():
             }
         },
         'group2': {
-            'status': ('removed', '-'), 'value': {
+            'status': ('removed', '-'),
+            'value': {
                 'abc': 12345, 'deep': {'id': 45}
             }
         },
         'group3': {
-            'status': ('added', '+'), 'value': {
+            'status': ('added', '+'),
+            'value': {
                 'deep': {
                     'id': {
                         'number': 45
