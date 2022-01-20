@@ -24,5 +24,8 @@ def test_nested_render(diff_nested_dicts):
 
 
 def test_flat_render_stylish(diff_flat_dicts):
-    render(diff_flat_dicts, style='stylish')
     assert type(render(diff_flat_dicts, style='stylish')) == str
+
+
+def test_flat_render_plain(diff_flat_dicts):
+    assert type(render(diff_flat_dicts, style='plain')) == str

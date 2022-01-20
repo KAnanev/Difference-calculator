@@ -32,7 +32,7 @@ def test_cli_diff_nested():
 
 
 def test_cli_diff_plain():
-    command = ['poetry', 'run', 'gendiff',
-               'data/before_flat.json', 'data/after_flat.json', 'plain']
+    command = ['poetry', 'run', 'gendiff', '-f', 'plain',
+               'data/before_flat.json', 'data/after_flat.json']
     out, err, exitcode = capture(command)
     assert exitcode == 0
