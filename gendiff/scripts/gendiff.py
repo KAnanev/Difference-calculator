@@ -5,7 +5,7 @@ from gendiff.parser import deserializer, parse_args
 from gendiff.differ import collect_diff_dicts
 
 
-def generate_diff(before_file, after_file, style):
+def generate_diff(before_file, after_file, style='stylish'):
     """Генерирует разность двух файлов"""
     before_dict = deserializer(before_file)
     after_dict = deserializer(after_file)
