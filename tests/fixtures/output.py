@@ -18,7 +18,7 @@ output_flat = """{
   + verbose: true
 }"""
 
-output_nested = """{
+output_nested_stylish = """{
     common: {
       + follow: false
         setting1: Value 1
@@ -63,7 +63,7 @@ output_nested = """{
     }
 }"""  # noqa: W291
 
-output_plain = """Property 'common.follow' was added with value: false
+output_nested_plain = """Property 'common.follow' was added with value: false
 Property 'common.setting2' was removed
 Property 'common.setting3' was updated. From true to null
 Property 'common.setting4' was added with value: 'blah blah'

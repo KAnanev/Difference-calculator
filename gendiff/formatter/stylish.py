@@ -34,12 +34,12 @@ def render_string(key, value, level) -> str:
     return result
 
 
-def render_stylish(diff_dict: dict, level=0) -> str:
+def render_stylish(dict_diff: dict, level=0) -> str:
     """Форматирует AST в текст"""
     indent = '    ' * level
 
     result = [
-        render_string(key, value, level) for key, value in diff_dict.items()
+        render_string(key, value, level) for key, value in dict_diff.items()
     ]
     result = itertools.chain("{", result, [indent + "}"])
 

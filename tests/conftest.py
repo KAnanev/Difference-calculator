@@ -1,5 +1,7 @@
 import pytest
 
+from gendiff.parser import deserializer
+
 
 @pytest.fixture()
 def path_to_plain_before_json_file():
@@ -39,6 +41,16 @@ def path_to_nested_before_yaml_file():
 @pytest.fixture()
 def path_to_nested_after_yaml_file():
     return 'data/after_nested.yaml'
+
+
+@pytest.fixture()
+def before_flat_dict():
+    return deserializer('before_flat.json')
+
+
+@pytest.fixture()
+def after_flat_dict():
+    return deserializer('after_flat.json')
 
 
 @pytest.fixture()
@@ -86,7 +98,8 @@ def diff_nested_dicts():
         'common': {
             'status': ('nested', ' '), 'value': {
                 'follow': {
-                    'status': ('added', '+'), 'value': 'false'
+                    'status': ('added', '+'),
+                    'value': 'false'
                 },
                 'setting1': {
                     'status': ('unchanged', ' '),
@@ -109,9 +122,11 @@ def diff_nested_dicts():
                     'value': {'key5': 'value5'}
                 },
                 'setting6': {
-                    'status': ('nested', ' '), 'value': {
+                    'status': ('nested', ' '),
+                    'value': {
                         'doge': {
-                            'status': ('nested', ' '), 'value': {
+                            'status': ('nested', ' '),
+                            'value': {
                                 'wow': {
                                     'status': ('changed', '-+'),
                                     'value': ('', 'so much')
@@ -146,12 +161,14 @@ def diff_nested_dicts():
             }
         },
         'group2': {
-            'status': ('removed', '-'), 'value': {
+            'status': ('removed', '-'),
+            'value': {
                 'abc': 12345, 'deep': {'id': 45}
             }
         },
         'group3': {
-            'status': ('added', '+'), 'value': {
+            'status': ('added', '+'),
+            'value': {
                 'deep': {
                     'id': {
                         'number': 45
