@@ -7,7 +7,7 @@ def test_render_plain_flat(diff_flat_dicts):
         diff_flat_dicts
     ) == "Property 'follow' was removed\n" \
          "Property 'proxy' was removed\n" \
-         "Property 'timeout' was updated. From '50' to '20'\n" \
+         "Property 'timeout' was updated. From 50 to 20\n" \
          "Property 'verbose' was added with value: true"
 
 
@@ -17,7 +17,7 @@ def test_render_plain_string_flat(diff_flat_dicts):
     ) == "Property 'follow' was removed"
     assert render_plain_string(
         'timeout', diff_flat_dicts['timeout'], None
-    ) == "Property 'timeout' was updated. From '50' to '20'"
+    ) == "Property 'timeout' was updated. From 50 to 20"
     assert render_plain_string(
         'verbose', diff_flat_dicts['verbose'], None
     ) == "Property 'verbose' was added with value: true"

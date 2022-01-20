@@ -46,4 +46,6 @@ def validated_value(value: dict or str) -> str:
         return '[complex value]'
     if value in ['true', 'false', 'null']:
         return value
-    return f"'{value}'"
+    if isinstance(value, str):
+        return f"'{value}'"
+    return value
