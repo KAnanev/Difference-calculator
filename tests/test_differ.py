@@ -10,7 +10,6 @@ def test_check_string():
     assert check_string('value') == 'value'
     assert check_string(0) == 0
     assert check_string('empty') is None
-    assert check_string(10) is 10
 
 
 def test_get_plain_diff_value():
