@@ -19,7 +19,7 @@ def nested(path, value):
     return render_plain(value, path)
 
 
-mapping = {
+MAPPING_STATUS = {
     'removed': removed,
     'changed': changed,
     'added': added,
@@ -28,20 +28,23 @@ mapping = {
 
 
 def render_plain(arr: dict, path=None) -> str:
+    """Собирает строки"""
     re = [render_plain_string(k, v, path) for k, v in arr.items()]
     return '\n'.join(filter(None, re))
 
 
 def render_plain_string(key: str, value: dict, path) -> str:
+    """Собирает строку"""
     status = value['status'][0]
     value = value['value']
     path = '.'.join(filter(None, [path, key]))
-    f = mapping.get(status)
+    f = MAPPING_STATUS.get(status)
     if f:
         return f(path, value)
 
 
 def validated_value(value: dict or str) -> str:
+    """Валидация значений"""
     if isinstance(value, dict):
         return '[complex value]'
     if value in ['true', 'false', 'null']:

@@ -10,4 +10,5 @@ STYLE_MAP = {
 
 
 def render(diff_dict, style):
+    """Рендерит выходные данные"""
     return STYLE_MAP.get(style)(diff_dict)
