@@ -5,7 +5,8 @@ def removed(*args):
 
 def changed(path, value):
     string_ = f"Property '{path}' was updated. " \
-              f"From {validated_value(value[0])} to {validated_value(value[1])}"
+              f"From {validated_value(value[0])} " \
+              f"to {validated_value(value[1])}"
     return string_
 
 
