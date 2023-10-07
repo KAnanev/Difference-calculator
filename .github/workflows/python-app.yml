@@ -5,9 +5,7 @@ name: Python application
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches: [ main, dev ]
 
 jobs:
   build:
@@ -33,31 +31,9 @@ jobs:
     - name: Test with pytest
       run: 
         make test
-  coverage:
-      name: coverage
-      runs-on: ubuntu-latest
-      
-      steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python 3.9
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-      - name: Install Poetry Action
-        uses: snok/install-poetry@v1.1.8
-        with:
-          virtualenvs-in-project: true
-      - name: Install dependencies
-        run:
-          make install
-      - name: Run tests
-        run: |
-          make coverage
-          
-      - uses: paambaati/codeclimate-action@v2.5.3
-        if: always()
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE }}
-
-        with:
-          coverageCommand: make coverage_xml
+    - uses: paambaati/codeclimate-action@v2.5.3
+      if: always()
+      env:
+        CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE }}
+      with:
+        coverageCommand: make coverage_xml
