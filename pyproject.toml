@@ -12,14 +12,15 @@ python = "^3.9"
 flake8-codeclimate = "^0.3.0"
 PyYAML = "^6.0.1"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.scripts]
+gendiff = "gendiff.scripts.gendiff:main"
+
+[tool.poetry.group.dev.dependencies]
+pytest-cov = "^4.1.0"
 flake8 = "^6.1.0"
 coverage = "^7.3.2"
 pytest = "^7.4.2"
 radon = "^6.0.1"
-
-[tool.poetry.scripts]
-gendiff = "gendiff.scripts.gendiff:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
